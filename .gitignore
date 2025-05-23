@@ -101,3 +101,7 @@ crashlytics-build.properties
 
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-*.bundle
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-*.so
+
+# Firebase config (opcional, si no quieres subirlo)
+Assets/StreamingAssets/google-services-desktop.json
+Assets/google-services.json
