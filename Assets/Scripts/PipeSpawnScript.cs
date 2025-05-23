@@ -18,13 +18,18 @@ public class PipeSpawnScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timer < spawnRate){
+        if (!GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdScript>().birdsIsAlive)
+            return;
+
+        if (timer < spawnRate)
+        {
             timer += Time.deltaTime;
-        }else {
+        }
+        else
+        {
             spawnPipe();
             timer = 0;
         }
-
     }
 
     void spawnPipe()
@@ -34,4 +39,10 @@ public class PipeSpawnScript : MonoBehaviour
 
         Instantiate(pipe, new Vector3(transform.position.x, Random.Range(lowestPoint,heightOffset),0), transform.rotation);
     }
+
+    
 }
+
+
+
+

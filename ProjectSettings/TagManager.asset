@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Logic
+  - Pipe
+  - Ground
+  - Ceiling
+  - Bird
   layers:
   - Default
   - TransparentFX

@@ -30,10 +30,11 @@ public class LogicScript : MonoBehaviour
 
     public void gameOver()
     {
-
         gameOverScreen.SetActive(true);
+        Debug.Log("Game Over screen activated");
 
         string nombre = PlayerPrefs.GetString("PlayerName", "Invitado");
         FirebaseManager.Instance.SaveScore(nombre, playerScore);
     }
+
 }

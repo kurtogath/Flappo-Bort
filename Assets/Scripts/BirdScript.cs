@@ -26,10 +26,13 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (birdsIsAlive)
+        if (!birdsIsAlive) return;
+
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Pipe"))
         {
             logic.gameOver();
             birdsIsAlive = false;
         }
     }
+
 }

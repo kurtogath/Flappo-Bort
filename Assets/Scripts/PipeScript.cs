@@ -17,12 +17,13 @@ public class PipeScript : MonoBehaviour
     void Update()
     {
 
-        transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
+        if (!GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdScript>().birdsIsAlive)
+            return;
 
-        if(transform.position.x < deadZone)
-        {
+        transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+
+        if (transform.position.x < deadZone)
             Destroy(gameObject);
-        }
 
     }
 }
