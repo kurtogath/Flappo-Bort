@@ -70,3 +70,34 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Unity
+[Línea para evitar cache y builds]
+[Línea para ignorar editor config]
+
+/[Librerías temporales]
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Logs/
+/UserSettings/
+/MemoryCaptures/
+*/Editor Default Resources/
+
+# VS/JetBrains
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.user
+
+# Sistema
+.DS_Store
+*.apk
+*.exe
+*.pidb
+*.unitypackage
+
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-*.bundle
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-*.so

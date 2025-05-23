@@ -11,6 +11,7 @@ public class BirdScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        birdsIsAlive = true;
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
 
@@ -25,7 +26,10 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        logic.gameOver();
-        birdsIsAlive = false;
+        if (birdsIsAlive)
+        {
+            logic.gameOver();
+            birdsIsAlive = false;
+        }
     }
 }

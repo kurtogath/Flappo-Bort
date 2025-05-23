@@ -1,0 +1,23 @@
+{
+  "project_info": {
+    "project_number": "903227251303",
+    "project_id": "flappo-bort",
+    "storage_bucket": "flappo-bort.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903227251303:web:dfbde92ac38dde63f152c2",
+        "android_client_info": {
+          "package_name": "com.companyname.flappobort"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFpakl-oPwr-V-PBZgSGvuQ20t4sQuHyI"
+        }
+      ]
+    }
+  ],
+  "database_url": "https://flappo-bort-default-rtdb.europe-west1.firebasedatabase.app"
+}
