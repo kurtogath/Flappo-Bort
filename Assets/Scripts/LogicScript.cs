@@ -34,6 +34,6 @@ public class LogicScript : MonoBehaviour
         gameOverScreen.SetActive(true);
 
         string nombre = PlayerPrefs.GetString("PlayerName", "Invitado");
-        FirebaseManager.Instance.GuardarPuntaje(nombre, playerScore);
+        FirebaseManager.Instance.SaveScore(nombre, playerScore);
     }
 }
