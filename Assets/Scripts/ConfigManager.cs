@@ -35,4 +35,11 @@ public class ConfigManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void SetBirdSkin(int skinIndex)
+    {
+        PlayerPrefs.SetInt("BirdSkin", skinIndex);
+        PlayerPrefs.Save();
+        Debug.Log("Skin guardada: " + skinIndex);
+    }
+
 }
