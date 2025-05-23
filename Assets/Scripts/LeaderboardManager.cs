@@ -37,8 +37,8 @@ public class LeaderboardManager : MonoBehaviour
 
             foreach (var child in task.Result.Children)
             {
-                string name = child.Child("nombre").Value?.ToString() ?? "Unknown";
-                int score = int.TryParse(child.Child("puntos").Value?.ToString(), out int s) ? s : 0;
+                string name = child.Child("name").Value?.ToString() ?? "Unknown";
+                int score = int.TryParse(child.Child("score").Value?.ToString(), out int s) ? s : 0;
                 entries.Add(new ScoreEntry(name, score));
             }
 
