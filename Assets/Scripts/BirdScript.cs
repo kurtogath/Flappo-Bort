@@ -13,8 +13,9 @@ public class BirdScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite birdSprite;
     public Sprite headSprite;
+    public Sprite damagedHeadSprite;
+    public Sprite damagedBirdSprite;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         birdsIsAlive = false; // el juego comienza inactivo
@@ -26,16 +27,21 @@ public class BirdScript : MonoBehaviour
 
         //Bird Skin
         int skinIndex = PlayerPrefs.GetInt("BirdSkin", 0);
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
 
         if (skinIndex == 0)
         {
             spriteRenderer.sprite = birdSprite;
             transform.localScale = Vector3.one;
+            collider.radius = 2.18f;
+            collider.offset = new Vector2(-0.124f, -0.45f);
         }
         else
         {
             spriteRenderer.sprite = headSprite;
             transform.localScale = new Vector3(0.58f, 0.58f, 0.58f);
+            collider.radius = 3.25f;
+            collider.offset = new Vector2(-0.04f, -0.1f);
         }
 
     }
@@ -51,13 +57,32 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!birdsIsAlive) return;
+        if (!birdsIsAlive ||
+            !(collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Pipe")))
+            return;
 
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Pipe"))
-        {
-            logic.gameOver();
-            birdsIsAlive = false;
-        }
+        logic.gameOver();
+        birdsIsAlive = false;
+
+        UpdateSpriteOnDeath();
+        ApplyKnockbackEffect();
     }
+
+    private void UpdateSpriteOnDeath()
+    {
+        int skinIndex = PlayerPrefs.GetInt("BirdSkin", 0);
+        spriteRenderer.sprite = (skinIndex == 1) ? damagedHeadSprite : damagedBirdSprite;
+    }
+
+    private void ApplyKnockbackEffect()
+    {
+        myRigidBody.bodyType = RigidbodyType2D.Dynamic;
+        myRigidBody.linearVelocity = Vector2.zero;
+
+        Vector2 knockbackDirection = new Vector2(-1, 1).normalized;
+        myRigidBody.AddForce(knockbackDirection * 250);
+        myRigidBody.AddTorque(10f);
+    }
+
 
 }

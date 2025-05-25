@@ -32,9 +32,18 @@ public class LogicScript : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
         Debug.Log("Game Over screen activated");
+        Debug.Log("Game Over");
 
         string nombre = PlayerPrefs.GetString("PlayerName", "Invitado");
-        FirebaseManager.Instance.SaveScore(nombre, playerScore);
+        if (FirebaseManager.Instance != null && FirebaseManager.Instance.databaseRef != null)
+        {
+            FirebaseManager.Instance.SaveScore(nombre, playerScore);
+        }
+        else
+        {
+            Debug.LogWarning("FirebaseManager no está listo. Score no guardado.");
+        }
+
     }
 
 }

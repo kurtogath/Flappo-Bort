@@ -335,6 +335,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 144669125}
   birdSprite: {fileID: -3803887304354961441, guid: 61a59900b4717d24b8f10c2986042494, type: 3}
   headSprite: {fileID: 7837568598334426523, guid: 3839bc50bedab4e4daa8ede1ba9fdcb7, type: 3}
+  damagedHeadSprite: {fileID: 5840157223480871481, guid: 37395521d35ef304faf4e5ef94335223, type: 3}
+  damagedBirdSprite: {fileID: -3342960698930204427, guid: bb62716e3a0dc4d499f3ab75f4148825, type: 3}
 --- !u!58 &144669128
 CircleCollider2D:
   m_ObjectHideFlags: 0

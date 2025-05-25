@@ -1,14 +1,11 @@
-using System.IO;
 using Firebase;
+using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using System.IO;
 using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
-[System.Serializable]
-public class FirebaseConfig
-{
-    public string database_url;
-}
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -29,6 +26,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
+
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Result != DependencyStatus.Available)
@@ -37,39 +35,56 @@ public class FirebaseManager : MonoBehaviour
                 return;
             }
 
-            string configPath = Path.Combine(Application.streamingAssetsPath, "google-services-desktop.json");
-
-            if (!File.Exists(configPath))
+            //Auth
+            FirebaseAuth.DefaultInstance.SignInAnonymouslyAsync().ContinueWithOnMainThread(authTask =>
             {
-                Debug.LogError($"Configuration file not found at: {configPath}");
-                return;
-            }
+                if (authTask.IsFaulted || authTask.IsCanceled)
+                {
+                    Debug.LogError("Error en autenticación anónima.");
+                    return;
+                }
 
-            string json = File.ReadAllText(configPath);
-            FirebaseConfig config = JsonUtility.FromJson<FirebaseConfig>(json);
+                Debug.Log("Usuario autenticado anónimamente.");
 
-            if (string.IsNullOrEmpty(config.database_url))
-            {
-                Debug.LogError("Missing or empty 'database_url' in google-services-desktop.json");
-                return;
-            }
+                // Load config
+                FirebaseConfig config = FirebaseConfigLoader.Load();
 
-            databaseRef = FirebaseDatabase.GetInstance(config.database_url).RootReference;
-            Debug.Log($"Firebase initialized with URL: {config.database_url}");
+                if (config == null || string.IsNullOrEmpty(config.database_url))
+                {
+                    Debug.LogError("Missing or empty 'database_url' in firebase-config.txt");
+                    return;
+                }
+
+                databaseRef = FirebaseDatabase.GetInstance(config.database_url).RootReference;
+                Debug.Log($"Firebase initialized with URL: {config.database_url}");
+            });
         });
+
+
     }
 
     public void SaveScore(string playerName, int score)
     {
+        Debug.Log("SaveScore");
         if (databaseRef == null)
         {
             Debug.LogWarning("Tried to save score without Firebase connection.");
             return;
         }
 
-        string id = databaseRef.Push().Key;
-        databaseRef.Child("leaderboard").Child(id).SetRawJsonValueAsync(JsonUtility.ToJson(new ScoreEntry(playerName, score)));
+        try
+        {
+            string id = databaseRef.Push().Key;
+            Debug.Log("Vamo a ver...");
+            databaseRef.Child("leaderboard").Child(id).SetRawJsonValueAsync(JsonUtility.ToJson(new ScoreEntry(playerName, score)));
+            Debug.Log("Guardado?");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Error al guardar score en Firebase: " + ex.Message);
+        }
     }
+
 
     [System.Serializable]
     private class ScoreEntry
